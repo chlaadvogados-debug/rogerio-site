@@ -1,85 +1,670 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Guia de Tratamento do Rogério</title>
-<style>
-  * { box-sizing: border-box; margin:0; padding:0; }
-  body { font-family: Arial, sans-serif; background: #f8f9fa; color: #333; line-height: 1.6; }
-  .container { max-width: 800px; margin: 0 auto; padding: 20px; }
-  .hero {
-    background: linear-gradient(135deg, #1D9E75, #0F6E56);
-    color: white;
-    text-align: center;
-    padding: 40px 20px;
-    border-radius: 16px;
-    margin-bottom: 20px;
-  }
-  .hero img {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 4px solid rgba(255,255,255,0.8);
-    box-shadow: 0 12px 30px rgba(0,0,0,0.3);
-    margin-bottom: 16px;
-  }
-  .hero h1 { font-size: 28px; margin-bottom: 10px; }
-  .hero p { font-size: 16px; opacity: 0.9; margin-bottom: 12px; }
-  .section { margin-bottom: 30px; }
-  .section h2 { font-size: 24px; color: #14795d; margin-bottom: 12px; }
-  .section p { margin-bottom: 10px; }
-  table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
-  }
-  table th, table td {
-    padding: 8px 12px;
-    border: 1px solid #ccc;
-  }
-  table th {
-    background: #e9f5f1;
-  }
-  @media(max-width:600px) {
-    .hero { padding: 30px 10px; }
-    .hero img { width: 120px; height: 120px; }
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rogério Coelho — Tratamento BEP</title>
+  <style>
+    :root{
+      --bg:#f4f7f8;
+      --surface:#ffffff;
+      --surface-2:#f8fbfb;
+      --text:#18322c;
+      --muted:#5d736c;
+      --line:#dce7e3;
+      --brand:#14795d;
+      --brand-2:#1da67d;
+      --danger:#d14d4d;
+      --danger-bg:#fff1f1;
+      --warning:#9c6a07;
+      --warning-bg:#fff6de;
+      --ok:#0f6e56;
+      --ok-bg:#e9f8f1;
+      --shadow:0 18px 50px rgba(18, 47, 40, .10);
+      --radius:22px;
+    }
+
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{
+      margin:0;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top right, rgba(29,166,125,.15), transparent 28%),
+        linear-gradient(180deg, #f8fbfc 0%, #f3f7f7 100%);
+      line-height:1.45;
+    }
+
+    .shell{
+      max-width:1180px;
+      margin:0 auto;
+      padding:24px 18px 60px;
+    }
+
+    .hero{
+      position:relative;
+      overflow:hidden;
+      border-radius:30px;
+      background:linear-gradient(135deg, #167a5f 0%, #0f5c48 100%);
+      color:#fff;
+      box-shadow:var(--shadow);
+      margin-bottom:22px;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      inset:auto -60px -80px auto;
+      width:260px;
+      height:260px;
+      border-radius:50%;
+      background:rgba(255,255,255,.08);
+      filter:blur(2px);
+    }
+
+    .hero-inner{
+      display:grid;
+      grid-template-columns:180px 1fr;
+      gap:24px;
+      align-items:center;
+      padding:28px;
+      position:relative;
+      z-index:1;
+    }
+
+    .portrait-wrap{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .portrait{
+      width:160px;
+      height:160px;
+      object-fit:cover;
+      border-radius:28px;
+      border:4px solid rgba(255,255,255,.75);
+      box-shadow:0 16px 35px rgba(0,0,0,.22);
+      background:#fff;
+    }
+
+    .hero-kicker{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      background:rgba(255,255,255,.14);
+      font-size:13px;
+      margin-bottom:12px;
+    }
+
+    .hero h1{
+      margin:0 0 8px;
+      font-size:clamp(28px, 4vw, 42px);
+      line-height:1.04;
+    }
+
+    .hero p{
+      margin:0 0 18px;
+      font-size:16px;
+      opacity:.95;
+      max-width:760px;
+    }
+
+    .hero-stats{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+    }
+
+    .stat{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.16);
+      backdrop-filter: blur(8px);
+      border-radius:18px;
+      padding:14px 16px;
+    }
+
+    .stat strong{
+      display:block;
+      font-size:20px;
+      margin-bottom:4px;
+      color:#fff;
+    }
+
+    .stat span{
+      font-size:13px;
+      opacity:.92;
+    }
+
+    .toolbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:18px 0 22px;
+    }
+
+    .chip{
+      background:#fff;
+      border:1px solid var(--line);
+      border-radius:999px;
+      padding:10px 14px;
+      color:var(--muted);
+      font-size:14px;
+      box-shadow:0 6px 20px rgba(19,46,39,.04);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:1.2fr .8fr;
+      gap:22px;
+      align-items:start;
+    }
+
+    .card{
+      background:var(--surface);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      box-shadow:0 8px 28px rgba(15,37,31,.05);
+    }
+
+    .card-head{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      padding:20px 22px 0;
+    }
+
+    .card-head h2{
+      font-size:22px;
+      margin:0;
+    }
+
+    .card-body{
+      padding:18px 22px 22px;
+    }
+
+    .sub{
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .timeline{
+      display:grid;
+      gap:14px;
+      margin-top:8px;
+    }
+
+    .phase{
+      display:grid;
+      grid-template-columns:120px 1fr;
+      gap:14px;
+      align-items:start;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:var(--surface-2);
+    }
+
+    .phase-badge{
+      display:inline-flex;
+      justify-content:center;
+      align-items:center;
+      min-height:42px;
+      border-radius:14px;
+      padding:10px 12px;
+      font-weight:700;
+      font-size:14px;
+      text-align:center;
+    }
+
+    .phase-strong{background:#fff1f1;color:#9b2d2d}
+    .phase-light{background:#eaf8f3;color:#0f6e56}
+    .phase-recover{background:#eef5ff;color:#1e5ba3}
+
+    .phase h3{
+      margin:0 0 6px;
+      font-size:18px;
+    }
+
+    .phase p{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .mini-table{
+      width:100%;
+      border-collapse:collapse;
+      overflow:hidden;
+      border-radius:16px;
+      border:1px solid var(--line);
+      background:#fff;
+      font-size:14px;
+    }
+
+    .mini-table th, .mini-table td{
+      padding:12px 10px;
+      text-align:left;
+      border-bottom:1px solid var(--line);
+      vertical-align:top;
+    }
+
+    .mini-table th{
+      background:#f7faf9;
+      color:var(--muted);
+      font-weight:600;
+      font-size:13px;
+    }
+
+    .mini-table tr:last-child td{border-bottom:none}
+
+    .drugs{
+      display:grid;
+      gap:12px;
+    }
+
+    .drug{
+      display:grid;
+      grid-template-columns:56px 1fr;
+      gap:14px;
+      align-items:start;
+      padding:16px;
+      border-radius:18px;
+      border:1px solid var(--line);
+      background:linear-gradient(180deg, #fff 0%, #fbfdfc 100%);
+    }
+
+    .drug-icon{
+      width:56px;
+      height:56px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:24px;
+      font-weight:800;
+      color:#fff;
+      background:linear-gradient(135deg, var(--brand-2), var(--brand));
+    }
+
+    .drug h3{
+      margin:0 0 4px;
+      font-size:18px;
+    }
+
+    .drug p{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .tag-row{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+    }
+
+    .tag{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:7px 10px;
+      border-radius:999px;
+      font-size:12px;
+      border:1px solid var(--line);
+      background:#fff;
+      color:var(--muted);
+    }
+
+    .tag.warn{
+      background:var(--warning-bg);
+      color:var(--warning);
+      border-color:#eed084;
+    }
+
+    .tag.danger{
+      background:var(--danger-bg);
+      color:#993737;
+      border-color:#f1c5c5;
+    }
+
+    .tag.ok{
+      background:var(--ok-bg);
+      color:var(--ok);
+      border-color:#bbe9d4;
+    }
+
+    .right-stack{
+      display:grid;
+      gap:22px;
+    }
+
+    .notice{
+      border-radius:18px;
+      padding:16px;
+      border:1px solid var(--line);
+    }
+
+    .notice h3{
+      margin:0 0 8px;
+      font-size:17px;
+    }
+
+    .notice ul{
+      margin:0;
+      padding-left:18px;
+      color:var(--text);
+    }
+
+    .notice li + li{margin-top:6px}
+
+    .notice.red{background:var(--danger-bg); border-color:#f0cbcb}
+    .notice.amber{background:var(--warning-bg); border-color:#eed084}
+    .notice.green{background:var(--ok-bg); border-color:#bbe9d4}
+
+    .food{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:12px;
+    }
+
+    .food-col{
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:16px;
+      background:#fff;
+    }
+
+    .food-col h3{
+      margin:0 0 10px;
+      font-size:17px;
+    }
+
+    .food-list{
+      display:grid;
+      gap:8px;
+      color:var(--muted);
+      font-size:14px;
+    }
+
+    .footer-note{
+      margin-top:22px;
+      padding:16px 18px;
+      border-radius:18px;
+      background:#fff;
+      border:1px solid var(--line);
+      color:var(--muted);
+      font-size:13px;
+    }
+
+    @media (max-width: 980px){
+      .layout{grid-template-columns:1fr}
+      .hero-inner{grid-template-columns:1fr; text-align:center}
+      .hero-stats{grid-template-columns:1fr}
+      .portrait{width:140px;height:140px}
+    }
+
+    @media (max-width: 680px){
+      .shell{padding:14px 12px 40px}
+      .hero{border-radius:24px}
+      .hero-inner{padding:20px}
+      .card-head{padding:18px 18px 0}
+      .card-body{padding:16px 18px 18px}
+      .phase{grid-template-columns:1fr}
+      .food{grid-template-columns:1fr}
+      .drug{grid-template-columns:1fr}
+      .drug-icon{width:48px;height:48px;border-radius:14px}
+      .mini-table{display:block; overflow-x:auto; white-space:nowrap}
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-  <div class="hero">
-    <img src="rogerio.jpg" alt="Rogério Coelho">
-    <h1>Rogério Coelho</h1>
-    <p>Guia do Tratamento BEP – Seminoma Retroperitoneal</p>
-    <p>Início do ciclo: 21/04/2026</p>
+  <div class="shell">
+    <section class="hero">
+      <div class="hero-inner">
+        <div class="portrait-wrap">
+          <img src="rogerio.jpg" alt="Rogério Coelho" class="portrait">
+        </div>
+        <div>
+          <div class="hero-kicker">Plano visual do tratamento</div>
+          <h1>Rogério Coelho — Guia do tratamento BEP</h1>
+          <!-- Atualização do texto de apresentação. Substituído conforme solicitação do usuário -->
+          <p>Uma jornada a mais na minha vida!</p>
+          <div class="hero-stats">
+            <div class="stat">
+              <strong>3 semanas</strong>
+              <span>cada ciclo completo</span>
+            </div>
+            <div class="stat">
+              <strong>3 drogas</strong>
+              <span>Bleomicina, Etoposídeo e Cisplatina</span>
+            </div>
+            <div class="stat">
+              <strong>85–95%</strong>
+              <span>chance estimada de cura</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="toolbar">
+      <div class="chip">Início do ciclo 1: 21/04/2026</div>
+      <div class="chip">Massa retroperitoneal ~10 cm</div>
+      <div class="chip">Linfonodo infracarinal em investigação</div>
+      <div class="chip">Visual pronto para publicação</div>
+    </div>
+
+    <main class="layout">
+      <section class="card">
+        <div class="card-head">
+          <div>
+            <h2>Calendário do ciclo</h2>
+            <div class="sub">Explicação simples e visual para o Rogério entender o tratamento.</div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="timeline">
+            <div class="phase">
+              <div class="phase-badge phase-strong">Semana 1<br>forte</div>
+              <div>
+                <h3>21/04 a 25/04 — quimioterapia intensa</h3>
+                <p>São 5 dias seguidos, com sessões mais longas. No primeiro dia entra BEP completo. Nos demais, entram etoposídeo e cisplatina.</p>
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Drogas</th>
+                      <th>Duração</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>21/04</td><td>Bleomicina + Etoposídeo + Cisplatina</td><td>~5h</td></tr>
+                    <tr><td>22/04</td><td>Etoposídeo + Cisplatina</td><td>~5h</td></tr>
+                    <tr><td>23/04</td><td>Etoposídeo + Cisplatina</td><td>~5h</td></tr>
+                    <tr><td>24/04</td><td>Etoposídeo + Cisplatina</td><td>~5h</td></tr>
+                    <tr><td>25/04</td><td>Etoposídeo + Cisplatina</td><td>~5h</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="phase">
+              <div class="phase-badge phase-light">Semana 2<br>leve</div>
+              <div>
+                <h3>28/04 — bleomicina</h3>
+                <p>Aplicação mais curta. A partir do dia 29/04 entram as injeções na barriga por 5 dias para ajudar a subir as defesas.</p>
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Drogas e apoio</th>
+                      <th>Duração</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>28/04</td><td>Bleomicina</td><td>~1h</td></tr>
+                    <tr><td>29/04 a 03/05</td><td>Injeções para subir as defesas</td><td>rápido</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="phase">
+              <div class="phase-badge phase-recover">Semana 3<br>recuperação</div>
+              <div>
+                <h3>05/05 — bleomicina e descanso</h3>
+                <p>Nesta fase o corpo tenta recuperar antes do próximo ciclo. Em geral, o ciclo seguinte recomeça em 12/05.</p>
+                <table class="mini-table">
+                  <thead>
+                    <tr>
+                      <th>Data</th>
+                      <th>Drogas</th>
+                      <th>Duração</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td>05/05</td><td>Bleomicina</td><td>~1h</td></tr>
+                    <tr><td>11/05</td><td>Análises pré-ciclo</td><td>rápido</td></tr>
+                    <tr><td>12/05</td><td>Início previsto do ciclo 2</td><td>reinicia</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <div class="footer-note">
+            Serão feitos 3 a 4 ciclos, dependendo da resposta ao tratamento e da avaliação médica.
+          </div>
+        </div>
+      </section>
+
+      <aside class="right-stack">
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Medicamentos</h2>
+              <div class="sub">As 3 drogas do protocolo BEP.</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="drugs">
+              <div class="drug">
+                <div class="drug-icon">B</div>
+                <div>
+                  <h3>Bleomicina</h3>
+                  <p>Ajuda a destruir o DNA do tumor. Entra no primeiro dia e depois uma vez por semana.</p>
+                  <div class="tag-row">
+                    <span class="tag">1h nas semanas 2 e 3</span>
+                    <span class="tag warn">atenção ao pulmão</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="drug">
+                <div class="drug-icon">E</div>
+                <div>
+                  <h3>Etoposídeo</h3>
+                  <p>Impede que as células do câncer se dividam. Faz parte da semana mais forte do ciclo.</p>
+                  <div class="tag-row">
+                    <span class="tag">5 dias seguidos</span>
+                    <span class="tag ok">atua forte no tumor</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="drug">
+                <div class="drug-icon">P</div>
+                <div>
+                  <h3>Cisplatina</h3>
+                  <p>É uma medicação potente do esquema. Pode causar formigamento e precisa de hidratação.</p>
+                  <div class="tag-row">
+                    <span class="tag">5 dias seguidos</span>
+                    <span class="tag danger">atenção aos nervos e rins</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Alertas</h2>
+              <div class="sub">O que observar durante o tratamento.</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="notice red">
+              <h3>Ir ao hospital</h3>
+              <ul>
+                <li>Febre de 38°C ou mais</li>
+                <li>Calafrios fortes</li>
+                <li>Falta de ar</li>
+                <li>Fraqueza extrema</li>
+              </ul>
+            </div>
+
+            <div class="notice amber" style="margin-top:12px;">
+              <h3>Avisar a médica</h3>
+              <ul>
+                <li>Formigamento nas mãos e pés</li>
+                <li>Vômitos persistentes</li>
+                <li>Dificuldade para comer ou beber</li>
+                <li>Diarreia intensa</li>
+              </ul>
+            </div>
+
+            <div class="notice green" style="margin-top:12px;">
+              <h3>No dia a dia</h3>
+              <ul>
+                <li>Evitar lugares cheios</li>
+                <li>Parar de fumar</li>
+                <li>Comer comida bem cozida</li>
+                <li>Evitar toranja</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="card">
+          <div class="card-head">
+            <div>
+              <h2>Alimentação</h2>
+              <div class="sub">Orientação prática e simples.</div>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="food">
+              <div class="food-col">
+                <h3>Pode</h3>
+                <div class="food-list">
+                  <div>Maçã, pera e banana</div>
+                  <div>Comida bem cozida</div>
+                  <div>Sopas, arroz, massas</div>
+                  <div>Frutas bem lavadas</div>
+                </div>
+              </div>
+              <div class="food-col">
+                <h3>Evitar</h3>
+                <div class="food-list">
+                  <div>Toranja</div>
+                  <div>Marisco duvidoso</div>
+                  <div>Comida crua</div>
+                  <div>Restaurante de procedência ruim</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      </aside>
+    </main>
   </div>
-  <div class="section">
-    <h2>Ciclo de Tratamento</h2>
-    <p>Cada ciclo dura três semanas e se repete 3 a 4 vezes.</p>
-    <table>
-      <tr><th>Semana</th><th>Dia</th><th>Medicação</th><th>Duração</th></tr>
-      <tr><td>1</td><td>Terça a Sábado</td><td>Bleomicina, Etoposídeo e Cisplatina</td><td>~5h por dia</td></tr>
-      <tr><td>2</td><td>Terça</td><td>Bleomicina</td><td>~1h</td></tr>
-      <tr><td>3</td><td>Terça</td><td>Bleomicina</td><td>~1h</td></tr>
-    </table>
-  </div>
-  <div class="section">
-    <h2>Cuidados e Efeitos</h2>
-    <p><strong>Efeitos comuns:</strong> náuseas, cansaço, alterações intestinais, formigamento nas mãos/pés.</p>
-    <p><strong>Risco de infecção:</strong> febre ≥ 38°C requer atendimento imediato. Evite aglomerações e contato com doentes.</p>
-    <p><strong>Fertilidade:</strong> já tem filhos, logo a fertilidade não é foco neste momento.</p>
-    <p><strong>Não fumar:</strong> a bleomicina pode causar toxicidade pulmonar.</p>
-  </div>
-  <div class="section">
-    <h2>Informações Médicas</h2>
-    <p>Diagnóstico: seminoma retroperitoneal.</p>
-    <p>Massa: ~10 cm; linfonodo infracarinal.</p>
-    <p>Marcadores tumorais: beta-hCG e alfa-fetoproteína normais; LDH elevado.</p>
-    <p>Prognóstico: boa chance de cura (85–95%).</p>
-  </div>
-</div>
 </body>
 </html>
